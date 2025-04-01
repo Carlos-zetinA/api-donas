@@ -1,0 +1,27 @@
+{
+  "name": "api-catalogo",
+  "version": "1.0.0",
+  "description": "api-rest del catalogo",
+  "main": "index.js",
+  "scripts": {
+    "test": "mongoose, nodemon, express, cors",
+    "dev": "nodemon index.js",
+    "start": "node index.js"
+  },
+  "keywords": [
+    "cors",
+    "express",
+    "nodemon"
+  ],
+  "author": "Carlos",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^2.2.0",
+    "connect-multiparty": "^2.2.0",
+    "cors": "^2.8.5",
+    "express": "^5.1.0",
+    "express-fileupload": "^1.5.1",
+    "mongoose": "^8.13.1",
+    "nodemon": "^3.1.9"
+  }
+}
