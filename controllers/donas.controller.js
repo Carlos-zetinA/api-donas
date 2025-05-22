@@ -1,20 +1,29 @@
 const Dona = require("../models/Donas.models");
 const image = require("../utils/image");
+const path = require("path"); // Asegúrate de importar path
 
 async function createDona(req, res) {
-  const dona = new Dona(req.body);
-  
   try {
-    if (req.files && req.files.imagen) {
-      const imagePath = image.getFilePath(req.files.imagen);
-      dona.imagen = imagePath;
-    }
+    const productos = new Dona(req.body);
 
-    const datos = await dona.save();
-    res.status(200).send(datos);
+    // Manejo de imagen si existe
+/*     if (req.files && req.files.imagep) {
+      const filePath = image.getFilePath(req.files.imagep);
+      const fileName = path.basename(filePath);
+      productos.imagep = fileName;
+    }
+ */
+    const datos = await productos.save();
+    res.status(201).send({
+      msg: "Producto creado correctamente",
+      datos,
+    });
   } catch (error) {
-    console.error(error);
-    res.status(500).send({ msg: "Error al guardar la dona" });
+    console.error("Error al crear la dona:", error);
+    res.status(500).send({
+      msg: "Error al crear la dona",
+      error: error.message, // Solo para desarrollo, quítalo en producción
+    });
   }
 }
 
@@ -23,7 +32,7 @@ async function getDona(req, res) {
     const buscarDonas = await Dona.find();
     res.status(200).send(buscarDonas);
   } catch (error) {
-    res.status(500).send({ msg: "Error al obtener las donas" });
+    res.status(500).send({ msg: "Error al obtener las donas", error: error.message });
   }
 }
 
@@ -33,7 +42,7 @@ async function delDona(req, res) {
     await Dona.findByIdAndDelete(id);
     res.status(200).send({ msg: "Dona eliminada correctamente" });
   } catch (error) {
-    res.status(500).send({ msg: "No se ha podido eliminar la dona" });
+    res.status(500).send({ msg: "No se ha podido eliminar la dona", error: error.message });
   }
 }
 
@@ -45,7 +54,7 @@ async function updateDona(req, res) {
     await Dona.findByIdAndUpdate({ _id: id }, updateDona);
     res.status(200).send({ msg: "Dona actualizada correctamente" });
   } catch (error) {
-    res.status(400).send({ msg: "Error al actualizar la dona" });
+    res.status(400).send({ msg: "Error al actualizar la dona", error: error.message });
   }
 }
 
